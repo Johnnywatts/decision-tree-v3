@@ -4,18 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Python project that aims to extract decision tree data from Miro boards and convert it to a YAML format suitable for building interactive web decision trees. The project focuses on parsing Miro boards containing:
+This is a Python project that extracts decision tree data from Miro boards and converts it to Mermaid diagram format. The project focuses on parsing Miro boards containing:
 
 - Start nodes (beginning of decision tree)
 - Diamond-shaped question nodes containing decision points
 - Connectors labeled with responses/answers
 - Final conclusion nodes
 
-The goal is to generate a Python-friendly file format (YAML) that captures the decision tree structure for later use in web applications.
+The goal is to generate clean Mermaid flowchart diagrams that accurately represent the decision tree structure.
 
 ## Project Status
 
-This appears to be an early-stage project with only a README file present. No code, dependencies, or build system has been implemented yet.
+Fully functional with a working pipeline from Miro API to Mermaid diagram generation.
 
 ## Setup and Usage
 
@@ -24,32 +24,45 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Run the extraction:
+Run the complete pipeline:
 ```bash
+# Step 1: Extract data from Miro (creates raw_miro_data.json)
 python miro_extractor.py
+
+# Step 2: Generate clean Mermaid diagram
+python fixed_mermaid_generator.py
 ```
 
 This will:
 1. Read board ID and API key from `board-details.yaml`
-2. Fetch decision tree data from Miro board
-3. Generate `decision_tree.yaml` with structured data
-4. Generate `decision_tree.mmd` with Mermaid flowchart
+2. Fetch decision tree data from Miro board and save as `raw_miro_data.json`
+3. Process the raw data and generate `fixed_decision_tree.mmd` and `fixed_decision_tree.md`
 
 ## File Structure
 
+**Core Files:**
 - `board-details.yaml` - Contains Miro board ID and API key
-- `miro_extractor.py` - Main extraction script
-- `decision_tree.yaml` - Generated YAML decision tree structure
-- `decision_tree.mmd` - Generated Mermaid flowchart
+- `miro_extractor.py` - Fetches data from Miro API
+- `fixed_mermaid_generator.py` - Generates clean Mermaid diagrams
+- `requirements.txt` - Python dependencies
+
+**Generated Files:**
+- `raw_miro_data.json` - Raw data from Miro API
+- `fixed_decision_tree.mmd` - Clean Mermaid flowchart
+- `fixed_decision_tree.md` - Markdown with embedded Mermaid diagram
 
 ## Architecture
 
-The extractor identifies:
-- Start nodes (shapes that have no incoming connections)
-- Question nodes (diamond shapes)
-- Conclusion nodes (sticky notes)
-- Connectors with labels (decision paths)
+The pipeline works in two stages:
 
-Output formats:
-- YAML: Structured decision tree with nodes, types, and options
-- Mermaid: Flowchart diagram with proper node shapes and labeled edges
+**Stage 1 (miro_extractor.py):**
+- Connects to Miro API using credentials from `board-details.yaml`
+- Fetches all board items and connectors
+- Saves raw JSON data to `raw_miro_data.json`
+
+**Stage 2 (fixed_mermaid_generator.py):**
+- Parses raw JSON data
+- Identifies node types: Start (stadium), Questions (diamond), Conclusions (stadium)
+- Maps connector labels to decision paths
+- Generates clean Mermaid flowchart syntax
+- Outputs both `.mmd` and `.md` formats

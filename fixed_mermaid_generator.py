@@ -146,7 +146,7 @@ class FixedMermaidGenerator:
         shape_type = node_info['mermaid_shape']
         
         # More aggressive text cleaning for Mermaid
-        safe_text = text.replace('"', "'").replace('\n', ' ').replace('<', '&lt;').replace('>', '&gt;').strip()
+        safe_text = text.replace('"', "'").replace('\n', ' ').replace('<', ' less than ').replace('>', ' greater than ').strip()
         # Remove other problematic characters
         safe_text = re.sub(r'[{}()\[\]]', '', safe_text)
         if len(safe_text) > 50:
@@ -231,7 +231,7 @@ class FixedMermaidGenerator:
             
             if label:
                 # Clean label for Mermaid - be more aggressive
-                clean_label = label.replace('"', "'").replace('<', '').replace('>', '').strip()
+                clean_label = label.replace('"', "'").replace('<', ' less than ').replace('>', ' greater than ').strip()
                 clean_label = re.sub(r'[{}()\[\]]', '', clean_label)
                 if len(clean_label) > 30:
                     clean_label = clean_label[:27] + "..."

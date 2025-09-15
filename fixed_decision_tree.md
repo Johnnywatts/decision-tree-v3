@@ -14,7 +14,7 @@ flowchart TD
     N3458764635360532325["include tool tips with definition of terms"]
     N3458764635362755501{"Anonymised/ Pseudo/ contains indentifiers"}
     N3458764636358126539{"Public or Private Dataset"}
-    N3458764636360976194["&lt;1000 case only what is option if &gt;1000 ?"]
+    N3458764636360976194["less than 1000 case only what is option if  gre..."]
     N3458764636474796545(["Apply via DAP-R"])
     N3458764636474951140(["Contact PO HRA approval required"])
     N3458764636474951421(["Contact PO HRA approval required"])
